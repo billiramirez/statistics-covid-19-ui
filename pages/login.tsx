@@ -15,7 +15,7 @@ const LogIn: FC = () => {
   const onLogin = async (values: { email: string; password: string }) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${API_URL}/auth/signup`, values);
+      const response = await axios.post(`${API_URL}/auth/login`, values);
       if (response.data.success && response.data.token) {
         Cookies.set("token", response.data.token);
         router.push("/country");
