@@ -55,3 +55,25 @@ NEXT_PUBLIC_API_URL=https://covid-statistics-prod.herokuapp.com/v1
 You are able to use the application once you're logged in, so please create an account in the signup page `http://localhost:3000/signup` or if you're logged in: `http://localhost:3000/login`
 
 You can also test this app in production, [in netlify](https://statistics-covid-19-consumer.netlify.app/country)
+
+### Screenshots
+
+#### Login Page
+
+![Login Page](https://res.cloudinary.com/billiramirez/image/upload/v1630656296/Screenshot_at_Sep_03_04-01-08_jz2fne.png)
+
+#### Country Page
+
+![Country Page](https://res.cloudinary.com/billiramirez/image/upload/v1630656296/Screenshot_at_Sep_03_04-03-07_apnwyr.png)
+
+#### Country Detail Page
+
+![Country Detail Page](https://res.cloudinary.com/billiramirez/image/upload/v1630656296/Screenshot_at_Sep_03_04-03-47_y7bnaj.png)
+
+#### Country Add Data
+
+![Country Add Data](https://res.cloudinary.com/billiramirez/image/upload/v1630656296/Screenshot_at_Sep_03_04-04-07_rlsamp.png)
+
+#### Country Search
+
+![Country Search](https://res.cloudinary.com/billiramirez/image/upload/v1630656296/Screenshot_at_Sep_03_04-03-28_sohhhw.png)

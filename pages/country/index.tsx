@@ -73,13 +73,19 @@ const Home: NextPage<HomePage> = ({ statistics = [], token }) => {
   const syncData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/sync`);
+      const response = await axios.get(`${API_URL}/sync`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const syncData = response.data;
       if (syncData.message) {
         await fetchInitialData();
         setLoading(false);
       }
-    } catch (err) {
+    } catch (err: any) {
+      if (err.response.status === 401) router.push("/login");
+
       setLoading(false);
       console.error(err);
     }
