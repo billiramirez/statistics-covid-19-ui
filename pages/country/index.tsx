@@ -9,12 +9,14 @@ import StatisticModal from "../../src/components/modal";
 import useStatisticData from "../../src/hooks/useStatisticData";
 import { Statistic } from "../../src/utils/types";
 import formReducer from "../../src/reducers/formReducer";
-import { getPayload } from "../../src/utils";
+import { getAppCookies, getPayload } from "../../src/utils";
+import { useRouter } from "next/router";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface HomePage {
   statistics: Statistic[];
+  token: string;
 }
 
 export const initialFormValues = {
@@ -26,28 +28,34 @@ export const initialFormValues = {
   tests: 0,
 };
 
-const Home: NextPage<HomePage> = ({ statistics = [] }) => {
+const Home: NextPage<HomePage> = ({ statistics = [], token }) => {
   const [searchText, setSearchText] = useState("");
   const [dataTable, setDataTable, setRawData] = useStatisticData(statistics);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentCountry, setCurrentCountry] = useState("");
   const [state, dispatch] = useReducer(formReducer, initialFormValues);
+  const router = useRouter();
 
   useEffect(() => {
     const searchCountry = async () => {
       try {
         setLoading(true);
         const endpoint = `${API_URL}/statistics/${searchText}`;
-        const response = await axios.get(endpoint);
-        console.log(response);
+        const response = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
         const data = response.data;
 
         if (data.success && data.statistics) {
           setRawData([data.statistics]);
           setLoading(false);
         }
-      } catch (err) {
+      } catch (err: any) {
+        if (err.response.status === 401) router.push("/login");
         setRawData([]);
         setLoading(false);
       }
@@ -97,7 +105,12 @@ const Home: NextPage<HomePage> = ({ statistics = [] }) => {
       const payload = getPayload(state);
       const response = await axios.post(
         `${API_URL}/statistics/${currentCountry}`,
-        payload
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response.data.success && response.data.statistics) {
         await fetchInitialData();
@@ -105,7 +118,9 @@ const Home: NextPage<HomePage> = ({ statistics = [] }) => {
 
       setIsModalVisible(false);
       reset();
-    } catch (err) {}
+    } catch (err: any) {
+      if (err.response.status === 401) router.push("/login");
+    }
   };
 
   const handleCancel = () => {
@@ -152,7 +167,18 @@ const Home: NextPage<HomePage> = ({ statistics = [] }) => {
   );
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: { req: any }) => {
+  const { req } = context;
+
+  const { token } = getAppCookies(req);
+  if (!token)
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+
   const statisticsResponse: AxiosResponse<any> = await axios.get(
     `${process.env.API_URL}/statistics`
   );

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { Button } from "antd";
+import { getAppCookies } from "../src/utils";
 
 const Home: NextPage = () => {
   return (
@@ -9,10 +10,15 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = () => {
+export const getServerSideProps = async (context: { req: any }) => {
+  const { req } = context;
+
+  const { token } = getAppCookies(req);
+
   return {
-    props: {
-      layout: "APP",
+    redirect: {
+      destination: !token ? "/login" : "/country",
+      permanent: false,
     },
   };
 };

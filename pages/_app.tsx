@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </AppLayout>
     </React.StrictMode>
   ) : (
-    <div>Hello</div>
+    <Component {...pageProps} />
   );
 }
 export default MyApp;
