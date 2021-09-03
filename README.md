@@ -56,6 +56,14 @@ You are able to use the application once you're logged in, so please create an a
 
 You can also test this app in production, [in netlify](https://statistics-covid-19-consumer.netlify.app/country)
 
+#### Testing
+
+You can run the tests by running:
+
+```bash
+yarn test
+```
+
 ### Screenshots
 
 #### Login Page
