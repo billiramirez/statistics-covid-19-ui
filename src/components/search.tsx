@@ -1,10 +1,14 @@
 import { Input, Space } from "antd";
+import { FC } from "react";
 
 const { Search } = Input;
 
-const onSearch = (value: any) => console.log(value);
+interface ISearchCountry {
+  onSearch: (country: string) => void;
+  loading: boolean;
+}
 
-const SearchCountry = () => {
+const SearchCountry: FC<ISearchCountry> = ({ onSearch, loading }) => {
   return (
     <Space
       direction="vertical"
@@ -15,7 +19,8 @@ const SearchCountry = () => {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={onSearch}
+        disabled={loading}
+        onSearch={(value) => onSearch(value)}
       />
     </Space>
   );
