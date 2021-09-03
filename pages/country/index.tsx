@@ -189,6 +189,7 @@ export const getServerSideProps = async (context: { req: any }) => {
     props: {
       layout: "APP",
       statistics: data || [],
+      token,
     },
   };
 };

@@ -18,6 +18,11 @@ const AppLayout: FC = (props) => {
           activeKey={router.route}
           style={{ display: "flex", justifyContent: "end" }}
         >
+          <Menu.Item key="/country">
+            <Link href="/country">
+              <a>Country</a>
+            </Link>
+          </Menu.Item>
           <Menu.Item
             key="/logout"
             onClick={() => {
