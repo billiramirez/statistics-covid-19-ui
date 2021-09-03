@@ -15,7 +15,7 @@ const SearchCountry: FC<ISearchCountry> = ({ onSearch, loading }) => {
       style={{ marginTop: "30px", marginBottom: "50px" }}
     >
       <Search
-        placeholder="input search text"
+        placeholder="Search by Country Name"
         allowClear
         enterButton="Search"
         size="large"
