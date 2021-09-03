@@ -1,3 +1,4 @@
+import _ from "lodash";
 import type { NextPage } from "next";
 import { useEffect, useState, useReducer } from "react";
 import axios, { AxiosResponse } from "axios";
@@ -120,6 +121,8 @@ const Home: NextPage<HomePage> = ({ statistics = [] }) => {
     });
   };
 
+  const orderedDataByContinent = _.orderBy(dataTable, "continent");
+
   return (
     <div className="App">
       <SearchCountry onSearch={onSearch} loading={loading} />
@@ -129,7 +132,7 @@ const Home: NextPage<HomePage> = ({ statistics = [] }) => {
         </Button>
       </div>
       <DataTable
-        data={dataTable}
+        data={orderedDataByContinent}
         loading={loading}
         onSelectItem={(country) => {
           setCurrentCountry(country);
