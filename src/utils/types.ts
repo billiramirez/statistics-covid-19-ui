@@ -15,3 +15,12 @@ export interface Statistic {
   day: string;
   time: string;
 }
+
+export interface IFormStatistic {
+  newCases: number;
+  activeCases: number;
+  criticalCases: number;
+  recoveredCases: number;
+  tests: number;
+  deaths: number;
+}
